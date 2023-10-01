@@ -1,6 +1,10 @@
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -20,6 +24,7 @@ android {
         }
     }
 
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -30,11 +35,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -74,4 +79,17 @@ dependencies {
     // For interop APIs with Material 3
     implementation ("androidx.glance:glance-material3:1.0.0")
     implementation("androidx.glance:glance:1.0.0")
+
+    // WorkManager and Hilt worker (to support DI)
+    implementation("androidx.work:work-runtime-ktx:2.9.0-beta01")
+    implementation("androidx.hilt:hilt-work:1.0.0")
+
+
+
+    // Hilt Library
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-compiler:2.48")
+}
+kapt {
+    correctErrorTypes = true
 }
